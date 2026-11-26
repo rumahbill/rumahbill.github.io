@@ -239,6 +239,7 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
 .rem{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:.9rem;cursor:pointer;user-select:none}.rem input{width:18px;height:18px;min-height:0;accent-color:var(--accent);margin:0}
 .klink{background:none;border:0;padding:0;color:var(--accent);font:600 .92rem var(--body);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .aprt .klink{white-space:nowrap}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.acts .btn{width:100%;padding:0 12px}.acts .wa{grid-column:1/-1}
 @media (max-width:480px){.apbar .wrap{height:auto;min-height:52px;flex-wrap:wrap;row-gap:6px;padding-block:8px}.aprt{gap:12px;margin-left:auto}}
 #request{background:var(--surface);border-top:1px solid var(--line)}
 .apbar{border-bottom:1px solid var(--line);background:var(--bg)}
@@ -454,7 +455,6 @@ a.tedit{display:inline-flex;align-items:center;text-decoration:none}
 <section id="request" hidden><div class="wrap formgrid">
   <div>
     <div class="head" style="margin-bottom:0"><h2>Request a trial</h2></div>
-    <div class="who" id="contactBox" hidden data-noi18n></div>
   </div>
   <div class="card">
     <form id="enq" novalidate>
@@ -469,7 +469,7 @@ a.tedit{display:inline-flex;align-items:center;text-decoration:none}
     <div class="out" id="out" hidden>
       <h3>Your enquiry is ready</h3>
       <div class="msg" id="msg"></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap" id="actions"><button class="btn primary" id="copy" type="button" data-noi18n>Copy message</button><button class="btn" id="edit" type="button">Edit details</button></div>
+      <div class="acts" id="actions"><button class="btn primary" id="copy" type="button" data-noi18n>Copy message</button><button class="btn" id="edit" type="button">Edit details</button></div>
       <p class="hint" id="sendhint" data-noi18n></p>
     </div>
   </div>
@@ -623,12 +623,6 @@ var CONTACT={email:'',whatsapp:'+60123121237'};
 var $=function(s){return document.querySelector(s)};
 var form=$('#enq'),out=$('#out'),msgEl=$('#msg'),err=$('#f-err');
 
-(function showContact(){
-  var box=$('#contactBox'),parts=[];
-  if(CONTACT.whatsapp)parts.push('WhatsApp: <b>'+esc(CONTACT.whatsapp)+'</b>');
-  if(CONTACT.email)parts.push('Email: <b>'+esc(CONTACT.email)+'</b>');
-  if(parts.length){box.innerHTML=parts.map(function(p){return'<span>'+p+'</span>'}).join('');box.hidden=false}
-})();
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 
 function build(v){
@@ -652,12 +646,13 @@ form.addEventListener('submit',function(e){
   actions.querySelectorAll('a').forEach(function(a){a.remove()});
   var hint=$('#sendhint');
   if(CONTACT.whatsapp){
-    var a=document.createElement('a');a.className='btn';a.target='_blank';a.rel='noopener';
-    a.href='https://wa.me/'+CONTACT.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent(text);a.textContent='Open WhatsApp';actions.insertBefore(a,actions.children[1]);
+    var a=document.createElement('a');a.className='btn wa';a.target='_blank';a.rel='noopener';
+    a.href='https://wa.me/'+CONTACT.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent(text);a.textContent='Open WhatsApp';actions.insertBefore(a,actions.firstChild);RB.refresh();
     hint.textContent=RB.tr('Nothing is sent from this page. Copy the message, or open WhatsApp and send it yourself.');
   }else if(CONTACT.email){hint.textContent=RB.tr('Nothing is sent from this page. Copy the message and email it to')+' '+CONTACT.email+'.'}
   else{hint.textContent=RB.tr('Nothing is sent from this page. Copy the message and send it to the person who shared this site with you.')}
-  form.hidden=true;out.hidden=false;out.scrollIntoView({block:'nearest'});$('#copy').focus();
+  $('#copy').classList.toggle('primary',!CONTACT.whatsapp);
+  form.hidden=true;out.hidden=false;out.scrollIntoView({block:'nearest'});(actions.querySelector('a')||$('#copy')).focus();
 });
 $('#edit').addEventListener('click',function(){out.hidden=true;form.hidden=false;form.elements.name.focus()});
 $('#copy').addEventListener('click',function(){
