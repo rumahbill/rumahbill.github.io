@@ -1,5 +1,5 @@
 /* RumahBill service worker: app shell works offline. Bump VERSION when you change index.html. */
-var VERSION='rb-v8';
+var VERSION='rb-v9';
 var SHELL=['./','./index.html','./manifest.webmanifest','./logo.png','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',function(e){e.waitUntil(caches.open(VERSION).then(function(c){return c.addAll(SHELL.map(function(u){return new Request(u,{cache:'reload'})}))}).then(function(){return self.skipWaiting()}))});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==VERSION}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});
