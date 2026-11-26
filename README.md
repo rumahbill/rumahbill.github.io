@@ -7,16 +7,15 @@ The live site is served by GitHub Pages from this repository.
 ## How it works
 
 - Everything is in `index.html`: the page, the styles and the scripts. There is no build step.
-- Landlords unlock the app with a trial key. Each key lasts 30 days from first use, and no key works after the end date in the `EXP` list in `index.html`.
-- Tenants, payments and reminders are saved in the browser on that phone only. Nothing is sent to a server. Landlords can copy a backup under "Backup and restore".
+- Anyone can open the app with the "Open RumahBill" button. There is no sign-up or key.
+- Tenants, payments and reminders are saved in the browser on that phone only. Nothing is sent to a server. Landlords can save a backup file under "Backup and restore".
 - Messages open in the landlord's own WhatsApp. Nothing is sent from the page.
 - The page works in English and Bahasa Malaysia. Malay text lives in the `RB.D` dictionaries near the end of `index.html`.
 - `manifest.webmanifest`, `sw.js` and the icons let it be installed as an app and work offline.
 
 ## Settings you may want to change
 
-- **Contact for trial requests:** `CONTACT` near the top of the main script in `index.html`. With a WhatsApp number set, the request form offers an "Open WhatsApp" button.
-- **Trial end date:** the `EXP` list in `index.html`.
+- **WhatsApp contact:** `CONTACT` near the top of the main script in `index.html`, and the link in the "Who's behind RumahBill" section. The "Want help getting set up?" form opens WhatsApp to this number.
 
 ## Updating the site
 
