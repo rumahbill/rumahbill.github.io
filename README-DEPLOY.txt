@@ -16,7 +16,7 @@ iPhone (mesti Safari):  Share  >  Add to Home Screen  >  Add
 Android (Chrome):       butang "Install app" atau menu (3 titik) > Install app / Add to Home screen
 
 PENTING UNTUK LANDLORD
-- Pasang app DAHULU, kemudian masukkan kunci percubaan di dalam app.
+- Pasang app DAHULU, kemudian buka RumahBill dari skrin utama dan mula guna di situ.
   (Pada iPhone, data dalam Safari dan data dalam app di skrin utama adalah berasingan.)
 - Data (penyewa, bayaran) disimpan pada telefon itu sahaja. Guna "Backup and restore" bila tukar telefon.
 
